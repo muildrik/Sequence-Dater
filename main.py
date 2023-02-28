@@ -16,12 +16,18 @@ def main():
         contextNumbers = set()
         contexts = {}
         
-        # STORE ARTIFACTS PER CONTEXT
+        # STORE ARTIFACTS IN MEMORY, ORGANIZED BY BURIAL NUMBER
         for artifact in artifactData:
+
+            # FILTER OUT MESA'EED RELATED CONTEXTS ONLY
             try:
                 if "Mesa’eed" in artifact['Site.string()'] and artifact['Grave.string()'] is not "" and "?" not in artifact['Grave.string()']:
                     contextNumbers.add(artifact['Grave.string()'])
+
+                    # ADD A NEW BURIAL ENTRY
                     if artifact['Grave.string()'] not in contexts.keys(): contexts[artifact['Grave.string()']] = []
+
+                    # BURIAL ALREADY EXISTS: ADD ARTIFACT TO OTHER ARTIFACTS FROM THIS BURIAL
                     contexts[artifact['Grave.string()']].append(artifact)
             except:
                 print("error")
@@ -43,17 +49,28 @@ def main():
                     allVals = minVals + maxVals
                     allVals.sort()
                     if (len(allVals) > 1):
+                        
+                        # DEFINE ALL VALUES
                         minVal = min(allVals)
                         maxVal = max(allVals)
                         q1 = statistics.median(allVals[:len(allVals)//2])
                         q2 = statistics.median(allVals)
                         q3 = statistics.median(allVals[len(allVals)//2:])
                         data = (minVal, maxVal, q1, q2, q3)
+
+                        # WRITE VALUES TO CSV-FILE
                         writer.writerow({'Context': context.replace('M/', ''), 'min': str(minVal), 'max' : str(maxVal), 'Q1' : str(q1), 'Q2' : str(q2), 'Q3' : str(q3) })
                         
                         fig1, ax1 = plt.subplots()
+
+                        # THESE ARE THE PHASES DEFINED BY PETRIE & KAISER EXPRESSED IN SEQUENCE DATES
+                        # NOTE: SEQUENCE DATE VALUES FOR KAISER ARE NOT BASED ON SPECIFIC ARTIFACT TYPES, BUT SIMPLY ON HIS OWN PUBLISHED RANGES (KAISER 1956; 1957)
+                        # BUILDING THIS PROGRAM AROUND SPECIFIC ARTIFACT TYPES WILL REQUIRE DEFINING A MATRIX WITH TYPES, ASSIGNING SEQUENCE DATES AND PHASES PER AUTHOR
                         petrie = [(30, 37, 0.1), (37, 60, 0.2), (60, 75, 0.3), (75, 80, 0.4)]
                         kaiser = [(30, 38, 0.1), (38, 45, 0.2), (45, 63, 0.3), (63, 80, 0.4)]
+                        
+                        # THE PHASES BY STAN HENDRICKX (2006)
+                        # THESE ARE PHASES DEFINED BY HENDRICKX WITH SPECIFIC CERAMIC TYPES. THESE ARE NOT IMPLEMENTED AT THE MOMENT
                         # hendrickx = {
                         #     'NQIA' : 'B18d, B21b, B22b, B22d, B22f, C10e, C10l, C10N, C64b, C64n, C76h',
                         #     'NQIB' : 'B18b, B18c, B21c, B21d2, B22j, B25b, B25c, B26b, C4h, C5d, C5m, F11a, P1a, P11a,P17, C75b, C76d, C76w'
@@ -63,11 +80,8 @@ def main():
                         #     # R 62–69
                         #     # R 80–86
                         # }
-                        # hendrickx = [(30, 38, 0.2), (38, 63, 0.4), (63, 80, 0.4)]
-                        # 30-38, 38-45, 45-63, 63-80
 
-                        # IF OTHER POTS IN COLLECTION PART OF PRECEDING DECREASE WEIGHT
-
+                        # DEFINE A GRAPH IN PETRIE'S SEQUENCE DATING SPACE
                         ax1.set_title(context)
                         for period in petrie:
                             plt.axvspan(period[0], period[1], facecolor=f"{period[2]}")
@@ -75,9 +89,11 @@ def main():
                         ax1.set_xlim(30, 80)
                         ax1.set_xticks([30, 40, 50, 60, 70, 80])
                         ax1.boxplot(data, vert=False)
-                        # plt.show()
-                        plt.savefig(f"{context.replace('/', '_')}-Petrie.png")
+
+                        # SAVE THE FIRST PLOT IN PETRIE'S SEQUENCE DATING SPACE
+                        plt.savefig(f"output/{context.replace('/', '_')}-Petrie.png")
                         
+                        # DEFINE A GRAPH IN KAISER'S SEQUENCE DATING SPACE
                         ax1.set_title(context)
                         for period in kaiser:
                             plt.axvspan(period[0], period[1], facecolor=f"{period[2]}")
@@ -85,9 +101,11 @@ def main():
                         ax1.set_xlim(30, 80)
                         ax1.set_xticks([30, 40, 50, 60, 70, 80])
                         ax1.boxplot(data, vert=False)
-                        # plt.show()
+                        
+                        # SAVE THE SECOND PLOT IN KAISER'S SEQUENCE DATING SPACE
                         plt.savefig(f"output/{context.replace('/', '_')}-Kaiser.png")
 
+                        # DEFINE A GRAPH IN HENDRICKX'S SPACE
                         # ax1.set_title(context)
                         # for period in hendrickx:
                         #     plt.axvspan(period[0], period[1], facecolor=f"{period[2]}")
@@ -95,42 +113,15 @@ def main():
                         # ax1.set_xlim(30, 80)
                         # ax1.set_xticks([30, 40, 50, 60, 70, 80])
                         # ax1.boxplot(data, vert=False)
-                        # # plt.show()
+
+                        # SAVE THE THIRD PLOT IN HENDRICKX'S SPACE
                         # plt.savefig(f"{context.replace('/', '_')}-Hendrickx.png")
 
                         plt.close()
 
-                        # with open('names.csv', 'a', newline='') as csvfile:
-                            # writer.writerow({'minVal': 'Lovely', 'last_name': 'Spam'})
-                            # writer.writerow({'maxVal': 'Wonderful', 'last_name': 'Spam'})
-                        # hendrickx = [(30, 38, 0.2), (38, 63, 0.4), (63, 80, 0.4)]
-                        # ax2 = ax1.twiny()
-                        # ax2.set_xlim(ax1.get_xlim())
-                        
-                        # new_tick_locations = [34, 49, 67]
-
-                        # ax2.set_xticks(new_tick_locations)
-                        # ax2.set_xticklabels(["NQI", "NQII", "NQIII"])
-                        # ax2.set_xlabel(r"Modified x-axis: $1/(1+X)$")
-                        
-                        # ax1.set_title(context)
-                        # plt.axvspan(30, 37, facecolor='0.2')
-                        # plt.axvspan(37, 60, facecolor='0.4')
-                        # plt.axvspan(60, 75, facecolor='0.6')
-                        # ax1.set_xlabel('Period')
-                        # ax1.set_xticks([30, 40, 50, 60, 70, 80])
-                        # ax1.boxplot(data, vert=False)
-                        # # plt.show()
-                        # plt.savefig(f"{context.replace('/', '_')} (SD plot).png")
-
 
                 except KeyError as e:
                     print(f"{e}: No artifacts for context {context}")
-
-# def tick_function(X):
-    # V = 1/(1+X)
-    # periods = ["NQI", "NQII", "NQIII"]
-    # return [ for z in V]
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Calculate and print boxplots from sequence date numbers')
