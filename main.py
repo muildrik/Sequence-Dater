@@ -41,7 +41,6 @@ def main():
 
             for context in contexts.keys():
                 try:
-                    # artifacts = contexts[context] # THESE ARE ALL ARTIFACTS IN THIS CONTEXT
                     minVals, maxVals, allVals = [], [], []
                     for artifact in contexts[context]:
                         if artifact['SD_MIN'].isdigit(): minVals.append(int(artifact['SD_MIN']))
@@ -65,7 +64,7 @@ def main():
 
                         # THESE ARE THE PHASES DEFINED BY PETRIE & KAISER EXPRESSED IN SEQUENCE DATES
                         # NOTE: SEQUENCE DATE VALUES FOR KAISER ARE NOT BASED ON SPECIFIC ARTIFACT TYPES, BUT SIMPLY ON HIS OWN PUBLISHED RANGES (KAISER 1956; 1957)
-                        # BUILDING THIS PROGRAM AROUND SPECIFIC ARTIFACT TYPES WILL REQUIRE DEFINING A MATRIX WITH TYPES, ASSIGNING SEQUENCE DATES AND PHASES PER AUTHOR
+                        # TODO: BUILDING THIS PROGRAM AROUND SPECIFIC ARTIFACT TYPES WILL REQUIRE DEFINING A MATRIX WITH TYPES, ASSIGNING SEQUENCE DATES AND PHASES PER AUTHOR
                         petrie = [(30, 37, 0.1), (37, 60, 0.2), (60, 75, 0.3), (75, 80, 0.4)]
                         kaiser = [(30, 38, 0.1), (38, 45, 0.2), (45, 63, 0.3), (63, 80, 0.4)]
                         
@@ -105,7 +104,7 @@ def main():
                         # SAVE THE SECOND PLOT IN KAISER'S SEQUENCE DATING SPACE
                         plt.savefig(f"output/{context.replace('/', '_')}-Kaiser.png")
 
-                        # DEFINE A GRAPH IN HENDRICKX'S SPACE
+                        # TODO: DEFINE A GRAPH IN HENDRICKX'S SPACE
                         # ax1.set_title(context)
                         # for period in hendrickx:
                         #     plt.axvspan(period[0], period[1], facecolor=f"{period[2]}")
