@@ -14,10 +14,10 @@ This program expects a .csv-file as input with artifact data organized in rows a
 The program calculates quartiles for each burial based on the Sequence Date values provided for all associated artifacts. The program will output a new CSV-file named SD.csv, with six columns, named 'Context', 'min', 'max', 'Q1', 'Q2', and 'Q3'. In addition, for each burial/context, the program can output boxplots, based on the quartiles, mapping them onto (1) the three major periods defined by in his Sequence Date range (Amratian, Gerzean and Semainean) and (2) the three somewhat similar phases defined by Werner Kaiser (1956; 1957) of Naqada I, II and III. At the moment, this program only works with Petrie's Sequence Dates rather than individual types of artifacts. Kaiser defined his phases partially on the same types that Petrie used and therefore similar Sequence Dates. However, Kaiser moved some types to different Sequence Dates.
 ## Artifacts_sample.csv
 This file is included as an example input file. Running the program (see below) will result in the following four images.
-![Sequence Dates for M/10 according to Petrie](https://github.com/muildrik/Sequence-Dater/output/M_10-Petrie.png)
-![Sequence Dates for M/10 according to Kaiser](https://github.com/muildrik/Sequence-Dater/output/M_10-Kaiser.png)
-![Sequence Dates for M/17 according to Petrie](https://github.com/muildrik/Sequence-Dater/output/M_17-Petrie.png)
-![Sequence Dates for M/17 according to Kaiser](https://github.com/muildrik/Sequence-Dater/output/M_17-Kaiser.png)
+![Sequence Dates for M/10 according to Petrie](/output/M_10-Petrie.png)
+![Sequence Dates for M/10 according to Kaiser](/output/M_10-Kaiser.png)
+![Sequence Dates for M/17 according to Petrie](/output/M_17-Petrie.png)
+![Sequence Dates for M/17 according to Kaiser](/output/M_17-Kaiser.png)
 # How to use
 The program can be run with the command "python main.py Artifacts_sample.csv" from the command line. This should generate the images and CSV-file described above.
 # Comments
