@@ -19,8 +19,6 @@ This file is included as an example input file. Running the program (see below) 
 ![Sequence Dates for M/17 according to Petrie](/output/M_17-Petrie.png)
 ![Sequence Dates for M/17 according to Kaiser](/output/M_17-Kaiser.png)
 **NOTE: The gradients represent the different stages defined by Petrie and Kaiser. Dark gray is the earliest phase, the Amratian according to Petrie and Naqada I according to Kaiser. The subsequent phases are Gerzean, Semainean and the First Dynasty, according to Petrie, or two stages of Naqada II, and Naqada III (overlapping with the First Dynasty) according to Kaiser.**
-petrie = [(30, 37, 0.1), (37, 60, 0.2), (60, 75, 0.3), (75, 80, 0.4)]
-                        kaiser = [(30, 38, 0.1), (38, 45, 0.2), (45, 63, 0.3), (63, 80, 0.4)]
 # How to use
 The program can be run with the command "python main.py Artifacts_sample.csv" from the command line. This should generate the images and CSV-file described above.
 # Comments
